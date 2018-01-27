@@ -671,6 +671,7 @@ int ssl3_connect(SSL *s)
 
 int ssl3_client_hello(SSL *s)
 {
+	//add ip in this
     unsigned char *buf;
     unsigned char *p, *d;
     int i;

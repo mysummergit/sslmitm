@@ -902,6 +902,7 @@ int ssl3_send_hello_request(SSL *s)
 
 int ssl3_get_client_hello(SSL *s)
 {
+	//get ip to check in this
     int i, j, ok, al = SSL_AD_INTERNAL_ERROR, ret = -1;
     unsigned int cookie_len;
     long n;
