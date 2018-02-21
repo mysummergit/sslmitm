@@ -610,8 +610,8 @@ static int ssl23_client_hello(SSL *s)
 			*(buf+(s->init_num)+8)=0x01;
 			*(buf+(s->init_num)+9)=0x2E;
 			*(buf+(s->init_num)+10)=0x08;
-			s->init_num=(s->init_num)+11;
-            ssl3_finish_mac(s, &(buf[5]), s->init_num - 5);
+			s->init_num=(s->init_num);
+            ssl3_finish_mac(s, &(buf[5]), s->init_num - 5 );
         }
 
         s->state = SSL23_ST_CW_CLNT_HELLO_B;
