@@ -636,12 +636,7 @@ int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
 {
     const unsigned char *buf = buf_;
 	int tempi;
-	printf("ssl3_write_bytes is %d\n",len);
-	for(tempi=0;tempi<len;tempi++)
-	{
-		printf("%02x ",*(buf+tempi));
-	}
-	printf("\n");
+	
     int tot;
     unsigned int n, nw;
 #if !defined(OPENSSL_NO_MULTIBLOCK) && EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK
