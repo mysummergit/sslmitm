@@ -929,6 +929,8 @@ int ssl3_get_client_hello(SSL *s)
         s->state = SSL3_ST_SR_CLNT_HELLO_B;
     }
     s->first_packet = 1;
+	printf("s->init_num is %d\n",s->init_num);
+	s->init_num=(s->init_num)-11;
     n = s->method->ssl_get_message(s,
                                    SSL3_ST_SR_CLNT_HELLO_B,
                                    SSL3_ST_SR_CLNT_HELLO_C,
