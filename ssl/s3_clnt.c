@@ -883,7 +883,13 @@ int ssl3_client_hello(SSL *s)
         ssl_set_handshake_header(s, SSL3_MT_CLIENT_HELLO, l);
         s->state = SSL3_ST_CW_CLNT_HELLO_B;
     }
-
+	int tempi;
+	printf("client hello666666\n");
+	for(tempi=0;tempi<=47;tempi++)
+	{
+		printf("%02x ",*(p+tempi));
+	}
+	printf("\n");
     /* SSL3_ST_CW_CLNT_HELLO_B */
     return ssl_do_write(s);
  err:
