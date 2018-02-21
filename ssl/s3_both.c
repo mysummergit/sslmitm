@@ -436,8 +436,9 @@ long ssl3_get_message(SSL *s, int st1, int stn, int mt, long max, int *ok)
 
     /* next state (stn) */
     p = s->init_msg;
+	s->s3->tmp.message_size=s->s3->tmp.message_size+11;
     n = s->s3->tmp.message_size - s->init_num;
-	printf("n=%d \n",n);
+	printf("s->s3->tmp.message_size=%d n=%d \n",s->s3->tmp.message_size,n);
     while (n > 0) {
         i = s->method->ssl_read_bytes(s, SSL3_RT_HANDSHAKE, &p[s->init_num],
                                       n, 0);
