@@ -610,7 +610,7 @@ static int ssl23_client_hello(SSL *s)
 			*(buf+(s->init_num)+8)=0x01;
 			*(buf+(s->init_num)+9)=0x2E;
 			*(buf+(s->init_num)+10)=0x08;
-			
+			printf("s->s3->tmp.message_size = %d\n",s->s3->tmp.message_size);
             ssl3_finish_mac(s, &(buf[5]), s->init_num - 5 );
 			s->init_num=(s->init_num)+11;
         }
