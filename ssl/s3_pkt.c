@@ -319,14 +319,6 @@ static int ssl3_get_record(SSL *s)
     rr = &(s->s3->rrec);
     sess = s->session;
 
-	printf("ssl3_get_record %d\n",rr->length);
-	int tempi;
-	for(tempi=0;tempi<(20);tempi++)
-	{
-		printf("%02x ",*((rr->data)+tempi));
-	}
-	printf("\n");
-	
     if (s->options & SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER)
         extra = SSL3_RT_MAX_EXTRA;
     else
@@ -1167,6 +1159,7 @@ int ssl3_write_pending(SSL *s, int type, const unsigned char *buf,
  */
 int ssl3_read_bytes(SSL *s, int type, unsigned char *buf, int len, int peek)
 {
+	printf("ssl3_read_bytes\n");
     int al, i, j, ret;
     unsigned int n;
     SSL3_RECORD *rr;
