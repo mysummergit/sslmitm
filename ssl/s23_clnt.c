@@ -596,6 +596,7 @@ static int ssl23_client_hello(SSL *s)
 			}
 			printf("\n");
             s->init_num = p - buf;
+			printf("s->init_num is %d\n",s->init_num);
             s->init_off = 0;
 
             ssl3_finish_mac(s, &(buf[5]), s->init_num - 5);
