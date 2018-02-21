@@ -587,8 +587,10 @@ static int ssl23_client_hello(SSL *s)
 
             /* number of bytes to write */
 			int tempi;
-			printf("client hello236\n");
-			for(tempi=0;tempi<=47;tempi++)
+			int uselen;
+			uselen=strlen(buf);
+			printf("client hello len %d\n",uselen);
+			for(tempi=0;tempi<uselen;tempi++)
 			{
 				printf("%02x ",*(buf+tempi));
 			}
