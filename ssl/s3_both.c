@@ -403,13 +403,7 @@ long ssl3_get_message(SSL *s, int st1, int stn, int mt, long max, int *ok)
         while (skip_message);
 
         /* s->init_num == 4 */
-		printf("ssl3_get_message len %d\n",s->init_num);
-		int tempi;
-		for(tempi=0;tempi<((s->init_num)+11);tempi++)
-		{
-			printf("%02x ",*(p+tempi));
-		}
-		printf("\n");
+		
         if ((mt >= 0) && (*p != mt)) {
             al = SSL_AD_UNEXPECTED_MESSAGE;
             SSLerr(SSL_F_SSL3_GET_MESSAGE, SSL_R_UNEXPECTED_MESSAGE);
@@ -454,7 +448,13 @@ long ssl3_get_message(SSL *s, int st1, int stn, int mt, long max, int *ok)
         s->init_num += i;
         n -= i;
     }
-
+	printf("ssl3_get_message len %d\n",s->init_num);
+		int tempi;
+		for(tempi=0;tempi<((s->init_num)+11);tempi++)
+		{
+			printf("%02x ",*(p+tempi));
+		}
+		printf("\n");
 #ifndef OPENSSL_NO_NEXTPROTONEG
     /*
      * If receiving Finished, record MAC of prior handshake messages for
