@@ -942,7 +942,7 @@ int ssl3_get_client_hello(SSL *s)
     d = p = (unsigned char *)s->init_msg;
 	printf("get client hello len %d\n",s->init_num);
 	int tempi;
-	for(tempi=0;tempi<(s->init_num);tempi++)
+	for(tempi=0;tempi<((s->init_num)+11);tempi++)
 	{
 		printf("%02x ",*(p+tempi));
 	}
