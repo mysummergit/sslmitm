@@ -635,8 +635,6 @@ int ssl3_do_compress(SSL *ssl)
 int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
 {
     const unsigned char *buf = buf_;
-	int tempi;
-	
     int tot;
     unsigned int n, nw;
 #if !defined(OPENSSL_NO_MULTIBLOCK) && EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK
@@ -1161,7 +1159,6 @@ int ssl3_write_pending(SSL *s, int type, const unsigned char *buf,
  */
 int ssl3_read_bytes(SSL *s, int type, unsigned char *buf, int len, int peek)
 {
-	printf("ssl3_read_bytes\n");
     int al, i, j, ret;
     unsigned int n;
     SSL3_RECORD *rr;

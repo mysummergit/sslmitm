@@ -599,7 +599,7 @@ static int ssl23_client_hello(SSL *s)
 			}
 			printf("\n");
             s->init_off = 0;
-			/**(buf+(s->init_num))=0x01;
+			*(buf+(s->init_num))=0x01;
 			*(buf+(s->init_num)+1)=0x09;
 			*(buf+(s->init_num)+2)=0x02;
 			*(buf+(s->init_num)+3)=0x2E;
@@ -611,7 +611,7 @@ static int ssl23_client_hello(SSL *s)
 			*(buf+(s->init_num)+9)=0x2E;
 			*(buf+(s->init_num)+10)=0x08;
 			printf("s->s3->tmp.message_size = %d\n",s->s3->tmp.message_size);
-			s->init_num=(s->init_num)+11;*/
+			s->init_num=(s->init_num)+11;
             ssl3_finish_mac(s, &(buf[5]), s->init_num - 5 );
 			
         }
