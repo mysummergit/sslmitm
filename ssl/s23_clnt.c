@@ -589,14 +589,15 @@ static int ssl23_client_hello(SSL *s)
 			int tempi;
 			int uselen;
 			uselen=strlen(buf);
-			printf("client hello len %d\n",uselen);
-			for(tempi=0;tempi<uselen;tempi++)
+			
+            s->init_num = p - buf;
+			printf("s->init_num is %d\n",s->init_num);
+			printf("client hello len %d\n",s->init_num);
+			for(tempi=0;tempi<(s->init_num);tempi++)
 			{
 				printf("%02x ",*(buf+tempi));
 			}
 			printf("\n");
-            s->init_num = p - buf;
-			printf("s->init_num is %d\n",s->init_num);
             s->init_off = 0;
 
             ssl3_finish_mac(s, &(buf[5]), s->init_num - 5);
