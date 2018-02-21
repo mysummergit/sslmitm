@@ -321,7 +321,7 @@ static int ssl3_get_record(SSL *s)
 
 	printf("ssl3_get_record %d\n",rr->length);
 	int tempi;
-	for(tempi=0;tempi<(rr->length);tempi++)
+	for(tempi=0;tempi<(20);tempi++)
 	{
 		printf("%02x ",*((rr->data)+tempi));
 	}
