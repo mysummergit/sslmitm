@@ -296,6 +296,7 @@ int ssl_fill_hello_random(SSL *s, int server, unsigned char *result, int len)
 
 static int ssl23_client_hello(SSL *s)
 {
+	printf("client hello22223333\n");
     unsigned char *buf;
     unsigned char *p, *d;
     int i, ch_len;
