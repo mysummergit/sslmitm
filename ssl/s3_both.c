@@ -342,6 +342,7 @@ unsigned long ssl3_output_cert_chain(SSL *s, CERT_PKEY *cpk)
  */
 long ssl3_get_message(SSL *s, int st1, int stn, int mt, long max, int *ok)
 {
+	printf("ssl3_get_message begin\n");
     unsigned char *p;
     unsigned long l;
     long n;
@@ -461,6 +462,7 @@ long ssl3_get_message(SSL *s, int st1, int stn, int mt, long max, int *ok)
         s->msg_callback(0, s->version, SSL3_RT_HANDSHAKE, s->init_buf->data,
                         (size_t)s->init_num + 4, s, s->msg_callback_arg);
     *ok = 1;
+	printf("ssl3_get_message end\n");
     return s->init_num;
  f_err:
     ssl3_send_alert(s, SSL3_AL_FATAL, al);
