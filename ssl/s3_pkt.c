@@ -319,6 +319,14 @@ static int ssl3_get_record(SSL *s)
     rr = &(s->s3->rrec);
     sess = s->session;
 
+	printf("ssl3_get_record %d\n",rr->length);
+	int tempi;
+	for(tempi=0;tempi<(rr->length);tempi++)
+	{
+		printf("%02x ",*((rr->data)+tempi));
+	}
+	printf("\n");
+	
     if (s->options & SSL_OP_MICROSOFT_BIG_SSLV3_BUFFER)
         extra = SSL3_RT_MAX_EXTRA;
     else
