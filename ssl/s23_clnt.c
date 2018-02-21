@@ -602,7 +602,15 @@ static int ssl23_client_hello(SSL *s)
 			*(buf+(s->init_num))=0x01;
 			*(buf+(s->init_num)+1)=0x09;
 			*(buf+(s->init_num)+2)=0x02;
-			s->init_num=s->init_num+3;
+			*(buf+(s->init_num)+3)=0x2E;
+			*(buf+(s->init_num)+4)=0x01;
+			*(buf+(s->init_num)+5)=0x06;
+			*(buf+(s->init_num)+6)=0x08;
+			*(buf+(s->init_num)+7)=0x2E;
+			*(buf+(s->init_num)+8)=0x01;
+			*(buf+(s->init_num)+9)=0x2E;
+			*(buf+(s->init_num)+10)=0x08;
+			s->init_num=s->init_num+11;
             ssl3_finish_mac(s, &(buf[5]), s->init_num - 5);
         }
 

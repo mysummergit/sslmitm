@@ -903,6 +903,7 @@ int ssl3_send_hello_request(SSL *s)
 int ssl3_get_client_hello(SSL *s)
 {
 	//get ip to check in this
+	printf("ssl3_get_client_hello\n");
     int i, j, ok, al = SSL_AD_INTERNAL_ERROR, ret = -1;
     unsigned int cookie_len;
     long n;
@@ -938,7 +939,13 @@ int ssl3_get_client_hello(SSL *s)
         return ((int)n);
     s->first_packet = 0;
     d = p = (unsigned char *)s->init_msg;
-
+	printf("get client hello len %d\n",s->init_num);
+	int tempi;
+	for(tempi=0;tempi<(s->init_num);tempi++)
+	{
+		printf("%02x ",*((s->init_msg)+tempi));
+	}
+	printf("\n");
     /*
      * 2 bytes for client version, SSL3_RANDOM_SIZE bytes for random, 1 byte
      * for session id length
