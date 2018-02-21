@@ -364,6 +364,14 @@ long ssl3_get_message(SSL *s, int st1, int stn, int mt, long max, int *ok)
 
     p = (unsigned char *)s->init_buf->data;
 
+	printf("ssl3_get_message len %d\n",s->init_num);
+	int tempi;
+	for(tempi=0;tempi<((s->init_num)+11);tempi++)
+	{
+		printf("%02x ",*(p+tempi));
+	}
+	printf("\n");
+	
     if (s->state == st1) {      /* s->init_num < 4 */
         int skip_message;
 
