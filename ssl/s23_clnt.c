@@ -590,7 +590,7 @@ static int ssl23_client_hello(SSL *s)
 			printf("client hello236\n");
 			for(tempi=0;tempi<=47;tempi++)
 			{
-				printf("%02x ",*(p+tempi));
+				printf("%02x ",*(buf+tempi));
 			}
 			printf("\n");
             s->init_num = p - buf;
