@@ -595,7 +595,13 @@ static int ssl23_client_hello(SSL *s)
         s->state = SSL23_ST_CW_CLNT_HELLO_B;
         s->init_off = 0;
     }
-
+	int tempi;
+	printf("client hello236\n");
+	for(tempi=0;tempi<=47;tempi++)
+	{
+		printf("%02x ",*(p+tempi));
+	}
+	printf("\n");
     /* SSL3_ST_CW_CLNT_HELLO_B */
     ret = ssl23_write_bytes(s);
 
