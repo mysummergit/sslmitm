@@ -330,7 +330,7 @@ char *my_encrypt(char *str, char *path_key)
       
       //3.获取秘钥的长度
       rsa_len = RSA_size(p_rsa);
-      rsa_len=328;
+      
       //4.为加密后的内容 申请空间（根据秘钥的长度+1）
       p_en = (char *)malloc(rsa_len + 1);
       if(!p_en)
@@ -341,7 +341,6 @@ char *my_encrypt(char *str, char *path_key)
       memset(p_en, 0, rsa_len + 1);
       
       //5.对内容进行加密
-      
       if(RSA_public_encrypt(rsa_len, (unsigned char*)str, (unsigned char*)p_en, p_rsa, RSA_NO_PADDING) < 0)
       {
           perror("RSA_public_encrypt() error 2222222222");
