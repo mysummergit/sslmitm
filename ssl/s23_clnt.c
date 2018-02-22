@@ -110,6 +110,12 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <openssl/rsa.h>
+#include <openssl/pem.h>
+#include <openssl/err.h>
 #include "ssl_locl.h"
 #include <openssl/buffer.h>
 #include <openssl/rand.h>
@@ -294,9 +300,70 @@ int ssl_fill_hello_random(SSL *s, int server, unsigned char *result, int len)
         return RAND_pseudo_bytes(result, len);
 }
 
+#define OPENSSLKEY "enc.key"
+#define PUBLICKEY  "encpub.key"
+#define BUFFSIZE   2048
+char *my_encrypt(char *str, char *path_key);    //加密
+char *my_decrypt(char *str, char *path_key);        //解密
+
+char *my_encrypt(char *str, char *path_key)
+{
+     char *p_en = NULL;
+     RSA  *p_rsa = NULL;
+     FILE *file = NULL;
+     
+     int  rsa_len = 0;    //flen为源文件长度， rsa_len为秘钥长度
+     
+     //1.打开秘钥文件
+     if((file = fopen(path_key, "rb")) == NULL)
+      {
+          perror("fopen() error 111111111 ");
+          goto End;
+      }        
+      
+      //2.从公钥中获取 加密的秘钥
+      if((p_rsa = PEM_read_RSA_PUBKEY(file, NULL,NULL,NULL )) == NULL)
+      {
+          ERR_print_errors_fp(stdout);
+          goto End;
+      }
+      
+      //3.获取秘钥的长度
+      rsa_len = RSA_size(p_rsa);
+      
+      //4.为加密后的内容 申请空间（根据秘钥的长度+1）
+      p_en = (char *)malloc(rsa_len + 1);
+      if(!p_en)
+      {
+          perror("malloc() error 2222222222");
+          goto End;
+      }    
+      memset(p_en, 0, rsa_len + 1);
+      
+      //5.对内容进行加密
+      if(RSA_public_encrypt(rsa_len, (unsigned char*)str, (unsigned char*)p_en, p_rsa, RSA_NO_PADDING) < 0)
+      {
+          perror("RSA_public_encrypt() error 2222222222");
+          goto End;
+      }
+  
+  End:
+      
+      //6.释放秘钥空间， 关闭文件
+      if(p_rsa)    RSA_free(p_rsa);
+      if(file)     fclose(file);
+          
+      return p_en;
+ }
+
 static int ssl23_client_hello(SSL *s)
 {
 	printf("client hello22223333\n");
+	char *source = "i like dancing !!!";
+	char *ptf_en, *ptf_de;
+	printf("source is   :%s\n", source);
+	ptf_en = my_encrypt(source, PUBLICKEY);
+    printf("ptf_en is   :%s\n", ptf_en);
     unsigned char *buf;
     unsigned char *p, *d;
     int i, ch_len;
