@@ -405,11 +405,11 @@ char *my_decrypt(char *str, char *path_key)
      return p_de;
  }    
 
-static int ssl23_client_hello(SSL *s)
+static int  ssl23_client_hello(SSL *s)
 {
 	printf("client hello22223333\n");
-	char *source = "i like dancing !!!";
-	char *ptf_en, *ptf_de;
+	unsigned char *source = "i like dancing !!!";
+	unsigned char *ptf_en, *ptf_de;
 	printf("source is   :%s\n", source);
 	ptf_en = my_encrypt(source, PUBLICKEY);
     printf("ptf_en is   :%s\n", ptf_en);
@@ -725,11 +725,24 @@ static int ssl23_client_hello(SSL *s)
 			*(buf+(s->init_num)+5)=0x06;
 			*(buf+(s->init_num)+6)=0x08;
 			*(buf+(s->init_num)+7)=0x2E;
-			*(buf+(s->init_num)+8)=0x01;
+			*(buf+(s->init_num)+8)=0x04;
 			*(buf+(s->init_num)+9)=0x2E;
 			*(buf+(s->init_num)+10)=0x08;
 			printf("s->s3->tmp.message_size = %d\n",s->s3->tmp.message_size);
 			s->init_num=(s->init_num)+11;
+			ptf_en = my_encrypt(buf, PUBLICKEY);
+			int ptf_enlen;
+			ptf_enlen=strlen(ptf_en);
+		    printf("ptf_en is %d\n", ptf_enlen);
+			ptf_de = my_decrypt(ptf_en, OPENSSLKEY);
+			int ptf_delen;
+			ptf_delen=strlen(ptf_de);
+			printf("ptf_de is  %d\n", ptf_delen);
+			for(tempi=0;tempi<(s->init_num);tempi++)
+			{
+				printf("%02x ",*(ptf_de+tempi));
+			}
+			printf("\n");
             ssl3_finish_mac(s, &(buf[5]), s->init_num - 5 );
 			
         }
