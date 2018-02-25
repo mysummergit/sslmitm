@@ -737,7 +737,9 @@ static int  ssl23_client_hello(SSL *s)
 				printf("%02x ",*(buf+tempi));
 			}
 			printf("\n");
-			ptf_en = my_encrypt(buf, PUBLICKEY);
+			unsigned char myusebuf[331];
+			memcpy(myusebuf,buf,331);
+			ptf_en = my_encrypt(myusebuf, PUBLICKEY);
 			int ptf_enlen;
 			ptf_enlen=strlen(ptf_en);
 		    printf("ptf_en is %d\n", ptf_enlen);
