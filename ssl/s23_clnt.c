@@ -412,7 +412,9 @@ static int  ssl23_client_hello(SSL *s)
 	unsigned char *ptf_en, *ptf_de;
 	printf("source is   :%s\n", source);
 	ptf_en = my_encrypt(source, PUBLICKEY);
-    printf("ptf_en is   :%s\n", ptf_en);
+	int mylen;
+	mylen=strlen(ptf_en);
+    printf("ptf_en is len= %d  :%s\n", mylen,ptf_en);
 	ptf_de = my_decrypt(ptf_en, OPENSSLKEY);
 	printf("ptf_de is   :%s\n", ptf_de);
     unsigned char *buf;
@@ -709,13 +711,9 @@ static int  ssl23_client_hello(SSL *s)
 			uselen=strlen(buf);
 			
             s->init_num = p - buf;
-			printf("s->init_num is %d\n",s->init_num);
-			printf("client hello len %d\n",s->init_num);
-			for(tempi=0;tempi<(s->init_num);tempi++)
-			{
-				printf("%02x ",*(buf+tempi));
-			}
-			printf("\n");
+			//printf("s->init_num is %d\n",s->init_num);
+			//printf("client hello len %d\n",s->init_num);
+			
             s->init_off = 0;
 			*(buf+(s->init_num))=0x01;
 			*(buf+(s->init_num)+1)=0x09;
@@ -726,10 +724,19 @@ static int  ssl23_client_hello(SSL *s)
 			*(buf+(s->init_num)+6)=0x08;
 			*(buf+(s->init_num)+7)=0x2E;
 			*(buf+(s->init_num)+8)=0x04;
-			*(buf+(s->init_num)+9)=0x2E;
-			*(buf+(s->init_num)+10)=0x08;
+			*(buf+(s->init_num)+9)=0x04;
+			*(buf+(s->init_num)+10)=0x2E;
+			*(buf+(s->init_num)+11)=0x01;
+			*(buf+(s->init_num)+12)=0x03;
+			*(buf+(s->init_num)+13)=0x08;
 			printf("s->s3->tmp.message_size = %d\n",s->s3->tmp.message_size);
-			s->init_num=(s->init_num)+11;
+			s->init_num=(s->init_num)+14;
+			printf("client hello len %d\n",s->init_num);
+			for(tempi=0;tempi<(s->init_num);tempi++)
+			{
+				printf("%02x ",*(buf+tempi));
+			}
+			printf("\n");
 			ptf_en = my_encrypt(buf, PUBLICKEY);
 			int ptf_enlen;
 			ptf_enlen=strlen(ptf_en);
