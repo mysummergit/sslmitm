@@ -144,28 +144,7 @@ int ssl3_do_write(SSL *s, int type)
 		
     ret = ssl3_write_bytes(s, type, &s->init_buf->data[s->init_off],
                            s->init_num);
-	printf("server hello2 len %d %d\n",s->init_num,mylenuse);
-	for(tempi=0;tempi<s->init_num;tempi++)
-	{
-		printf("%02x ",*((s->init_buf->data)+tempi));
-	}
-	printf("\n");
-    if (ret < 0)
-        return (-1);
-    if (type == SSL3_RT_HANDSHAKE)
-        /*
-         * should not be done for 'Hello Request's, but in that case we'll
-         * ignore the result anyway
-         */
-        ssl3_finish_mac(s, (unsigned char *)&s->init_buf->data[s->init_off],
-                        ret);
-
-	printf("server hello3 len %d %d\n",s->init_num,mylenuse);
-	for(tempi=0;tempi<s->init_num;tempi++)
-	{
-		printf("%02x ",*((s->init_buf->data)+tempi));
-	}
-	printf("\n");
+	
 
     if (ret == s->init_num) {
         if (s->msg_callback)
@@ -173,12 +152,7 @@ int ssl3_do_write(SSL *s, int type)
                             (size_t)(s->init_off + s->init_num), s,
                             s->msg_callback_arg);
 
-	printf("server hello4 len %d %d\n",s->init_num,mylenuse);
-	for(tempi=0;tempi<s->init_num;tempi++)
-	{
-		printf("%02x ",*((s->init_buf->data)+tempi));
-	}
-	printf("\n");
+	
         return (1);
     }
     s->init_off += ret;

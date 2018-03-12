@@ -634,6 +634,15 @@ int ssl3_do_compress(SSL *ssl)
  */
 int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
 {
+	int tempi;
+	int mylenuse;
+	mylenuse=strlen(buf_);
+	printf("ssl3_write_bytes hello1 len %d %d\n",len,mylenuse);
+	for(tempi=0;tempi<len;tempi++)
+	{
+		printf("%02x ",*(buf_+tempi));
+	}
+	printf("\n");
     const unsigned char *buf = buf_;
     int tot;
     unsigned int n, nw;
