@@ -134,7 +134,7 @@ int ssl3_do_write(SSL *s, int type)
     int ret;
 	int tempi;
 	int mylenuse;
-	mylenuse=strlen(buf);
+	mylenuse=strlen((s->init_buf->data));
 	printf("server hello1 len %d %d\n",s->init_num,mylenuse);
 	for(tempi=0;tempi<s->init_num;tempi++)
 	{
