@@ -365,7 +365,22 @@ int BIO_write(BIO *b, const void *in, int inl)
 			printf("%02x ",*(source6+tempi));
 		}
 		printf("\n");
+		
+		ptf_en = my_rsaencrypt(source1, OPENSSLKEY);
+		memcpy(mybuf,ptf_en,256);
+		ptf_en = my_rsaencrypt(source2, OPENSSLKEY);
+		memcpy(mybuf+256,ptf_en,256);
+		ptf_en = my_rsaencrypt(source3, OPENSSLKEY);
+		memcpy(mybuf+512,ptf_en,256);
+		ptf_en = my_rsaencrypt(source4, OPENSSLKEY);
+		memcpy(mybuf+768,ptf_en,256);
+		ptf_en = my_rsaencrypt(source5, OPENSSLKEY);
+		memcpy(mybuf+1024,ptf_en,256);
 		ptf_en = my_rsaencrypt(source6, OPENSSLKEY);
+		memcpy(mybuf+1280,ptf_en,256);
+		
+
+		
 		int mylen;
 		mylen=strlen(ptf_en);
 	    printf("ptf_en is len= %d  :%s\n", mylen,ptf_en);
@@ -376,8 +391,8 @@ int BIO_write(BIO *b, const void *in, int inl)
 			printf("%02x ",*(ptf_de+tempi));
 		}
 		printf("\n");
-		inl=1358;
-		*(mybuf+1357)=0x02;
+		inl=1536;
+		
 	}
 	printf("1111111111BIO_write\n");
     int i;
@@ -407,7 +422,7 @@ int BIO_write(BIO *b, const void *in, int inl)
 	
 	
 	printf("BIO_write len %d %d\n",inl,mylenuse);
-	if(inl==1358)
+	if(inl==1536)
 	{
 	for(tempi=0;tempi<inl;tempi++)
 	{
