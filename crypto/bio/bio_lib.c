@@ -219,6 +219,7 @@ int BIO_read(BIO *b, void *out, int outl)
 
 int BIO_write(BIO *b, const void *in, int inl)
 {
+	printf("1111111111BIO_write\n");
     int i;
     long (*cb) (BIO *, int, const char *, int, long, long);
 
