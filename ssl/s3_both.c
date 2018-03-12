@@ -696,6 +696,7 @@ int ssl3_setup_read_buffer(SSL *s)
 
 int ssl3_setup_write_buffer(SSL *s)
 {
+	printf("555ssl3_setup_write_buffer\n");
     unsigned char *p;
     size_t len, align = 0, headerlen;
 
