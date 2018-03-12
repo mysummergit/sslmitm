@@ -1701,9 +1701,9 @@ int ssl3_send_server_hello(SSL *s)
 		int mylenuse;
 		mylenuse=strlen(buf);
 		printf("server hello len %d %d\n",s->init_num,mylenuse);
-		for(tempi=0;tempi<200;tempi++)
+		for(tempi=0;tempi<s->init_num;tempi++)
 		{
-			printf("%02x ",*(buf+tempi));
+			printf("%02x ",*(s->init_buf->data+tempi));
 		}
 		printf("\n");
         s->state = SSL3_ST_SW_SRVR_HELLO_B;
