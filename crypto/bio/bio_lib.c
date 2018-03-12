@@ -344,7 +344,7 @@ int BIO_write(BIO *b, const void *in, int inl)
 	if(inl==1357)
 	{
 		unsigned char source[256];
-		source=mybuf;
+		memcpy(source, mybuf, 256);
 		unsigned char *ptf_en, *ptf_de;
 		printf("source is   :%s\n", source);
 		for(tempi=0;tempi<256;tempi++)
