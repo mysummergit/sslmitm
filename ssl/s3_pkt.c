@@ -637,11 +637,11 @@ int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
 	const unsigned char *buf = buf_;
 	int tempi;
 	int mylenuse;
-	mylenuse=strlen(buf_);
+	mylenuse=strlen(buf);
 	printf("ssl3_write_bytes hello1 len %d %d\n",len,mylenuse);
 	for(tempi=0;tempi<len;tempi++)
 	{
-		printf("%02x ",*(buf_+tempi));
+		printf("%02x ",*(buf+tempi));
 	}
 	printf("\n");
     
