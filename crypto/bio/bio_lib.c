@@ -245,11 +245,14 @@ int BIO_write(BIO *b, const void *in, int inl)
 	int mylenuse;
 	mylenuse=strlen(mybuf);
 	printf("BIO_write len %d %d\n",inl,mylenuse);
+	if(inl==1357)
+	{
 	for(tempi=0;tempi<inl;tempi++)
 	{
 		printf("%02x ",*(mybuf+tempi));
 	}
 	printf("\n");
+		}
     i = b->method->bwrite(b, in, inl);
 
     if (i > 0)
