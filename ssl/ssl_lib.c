@@ -1033,6 +1033,7 @@ int SSL_peek(SSL *s, void *buf, int num)
 
 int SSL_write(SSL *s, const void *buf, int num)
 {
+	printf("6666SSL_write\n");
     if (s->handshake_func == 0) {
         SSLerr(SSL_F_SSL_WRITE, SSL_R_UNINITIALIZED);
         return -1;
