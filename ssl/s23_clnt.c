@@ -332,6 +332,7 @@ char *my_encrypt(char *str, char *path_key)
       rsa_len = RSA_size(p_rsa);
       
       //4.为加密后的内容 申请空间（根据秘钥的长度+1）
+      rsa_len=331
       p_en = (char *)malloc(rsa_len + 1);
       if(!p_en)
       {
