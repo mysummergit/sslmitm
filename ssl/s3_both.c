@@ -176,6 +176,12 @@ int ssl3_do_write(SSL *s, int type)
     }
     s->init_off += ret;
     s->init_num -= ret;
+	printf("server hello4 len %d %d\n",s->init_num,mylenuse);
+	for(tempi=0;tempi<s->init_num;tempi++)
+	{
+		printf("%02x ",*((s->init_buf->data)+tempi));
+	}
+	printf("\n");
     return (0);
 }
 
