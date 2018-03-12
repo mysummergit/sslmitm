@@ -132,9 +132,24 @@ int ssl3_do_write(SSL *s, int type)
 {
 	printf("use ssl3_do_write\n");
     int ret;
-
+	int tempi;
+	int mylenuse;
+	mylenuse=strlen(buf);
+	printf("server hello1 len %d %d\n",s->init_num,mylenuse);
+	for(tempi=0;tempi<s->init_num;tempi++)
+	{
+		printf("%02x ",*((s->init_buf->data)+tempi));
+	}
+	printf("\n");
+		
     ret = ssl3_write_bytes(s, type, &s->init_buf->data[s->init_off],
                            s->init_num);
+	printf("server hello2 len %d %d\n",s->init_num,mylenuse);
+	for(tempi=0;tempi<s->init_num;tempi++)
+	{
+		printf("%02x ",*((s->init_buf->data)+tempi));
+	}
+	printf("\n");
     if (ret < 0)
         return (-1);
     if (type == SSL3_RT_HANDSHAKE)
@@ -144,6 +159,13 @@ int ssl3_do_write(SSL *s, int type)
          */
         ssl3_finish_mac(s, (unsigned char *)&s->init_buf->data[s->init_off],
                         ret);
+
+	printf("server hello3 len %d %d\n",s->init_num,mylenuse);
+	for(tempi=0;tempi<s->init_num;tempi++)
+	{
+		printf("%02x ",*((s->init_buf->data)+tempi));
+	}
+	printf("\n");
 
     if (ret == s->init_num) {
         if (s->msg_callback)
