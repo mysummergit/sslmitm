@@ -130,6 +130,7 @@
  */
 int ssl3_do_write(SSL *s, int type)
 {
+	printf("use ssl3_do_write\n");
     int ret;
 
     ret = ssl3_write_bytes(s, type, &s->init_buf->data[s->init_off],
