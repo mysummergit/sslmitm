@@ -240,7 +240,16 @@ int BIO_write(BIO *b, const void *in, int inl)
         BIOerr(BIO_F_BIO_WRITE, BIO_R_UNINITIALIZED);
         return (-2);
     }
-
+	unsigned char* mybuf=in;
+	int tempi;
+	int mylenuse;
+	mylenuse=strlen(mybuf);
+	printf("BIO_write len %d %d\n",inl,mylenuse);
+	for(tempi=0;tempi<inl;tempi++)
+	{
+		printf("%02x ",*(mybuf+tempi));
+	}
+	printf("\n");
     i = b->method->bwrite(b, in, inl);
 
     if (i > 0)
