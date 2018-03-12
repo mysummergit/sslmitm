@@ -1603,11 +1603,11 @@ int ssl3_send_server_hello(SSL *s)
 	unsigned char *source = "i like dancing !!!";
 	unsigned char *ptf_en, *ptf_de;
 	printf("source is   :%s\n", source);
-	ptf_en = my_encrypt(source, OPENSSLKEY);
+	ptf_en = my_rsaencrypt(source, OPENSSLKEY);
 	int mylen;
 	mylen=strlen(ptf_en);
     printf("ptf_en is len= %d  :%s\n", mylen,ptf_en);
-	ptf_de = my_decrypt(ptf_en, PUBLICKEY);
+	ptf_de = my_rsadecrypt(ptf_en, PUBLICKEY);
 	printf("ptf_de is   :%s\n", ptf_de);
     unsigned char *buf;
     unsigned char *p, *d;
