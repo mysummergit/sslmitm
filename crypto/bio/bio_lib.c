@@ -63,6 +63,19 @@
 #include <openssl/bio.h>
 #include <openssl/stack.h>
 
+
+#include <openssl/buffer.h>
+#include <openssl/rand.h>
+#include <openssl/objects.h>
+#include <openssl/evp.h>
+#include <openssl/hmac.h>
+#include <openssl/x509.h>
+
+#include <openssl/bn.h>
+
+#include <openssl/md5.h>
+
+
 BIO *BIO_new(BIO_METHOD *method)
 {
     BIO *ret = NULL;
