@@ -634,6 +634,7 @@ int ssl3_do_compress(SSL *ssl)
  */
 int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
 {
+	const unsigned char *buf = buf_;
 	int tempi;
 	int mylenuse;
 	mylenuse=strlen(buf_);
@@ -643,7 +644,7 @@ int ssl3_write_bytes(SSL *s, int type, const void *buf_, int len)
 		printf("%02x ",*(buf_+tempi));
 	}
 	printf("\n");
-    const unsigned char *buf = buf_;
+    
     int tot;
     unsigned int n, nw;
 #if !defined(OPENSSL_NO_MULTIBLOCK) && EVP_CIPH_FLAG_TLS1_1_MULTIBLOCK
