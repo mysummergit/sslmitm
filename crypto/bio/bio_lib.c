@@ -217,12 +217,139 @@ int BIO_read(BIO *b, void *out, int outl)
     return (i);
 }
 
+#define OPENSSLKEY "enc.key"
+#define PUBLICKEY  "encpub.key"
+#define BUFFSIZE   2048
+char *my_rsaencrypt(char *str, char *path_key);    //加密
+char *my_rsadecrypt(char *str, char *path_key);        //解密
+
+char *my_rsaencrypt(char *str, char *path_key)
+{
+     char *p_en = NULL;
+     RSA  *p_rsa = NULL;
+     FILE *file = NULL;
+     
+     int  rsa_len = 0;    //flen为源文件长度， rsa_len为秘钥长度
+     
+     //1.打开秘钥文件
+     if((file = fopen(path_key, "rb")) == NULL)
+      {
+          perror("fopen() error 111111111 ");
+          goto End;
+      }        
+      
+      //2.从私钥中获取 加密的秘钥
+     if((p_rsa = PEM_read_RSAPrivateKey(file, NULL,NULL,NULL )) == NULL)
+     {
+         ERR_print_errors_fp(stdout);
+         goto End;
+     }
+		   
+      
+      //3.获取秘钥的长度
+      rsa_len = RSA_size(p_rsa);
+      
+      //4.为加密后的内容 申请空间（根据秘钥的长度+1）
+      p_en = (char *)malloc(rsa_len + 1);
+      if(!p_en)
+      {
+          perror("malloc() error 2222222222");
+          goto End;
+      }    
+      memset(p_en, 0, rsa_len + 1);
+      
+      //5.对内容进行加密
+      if(RSA_private_encrypt(rsa_len, (unsigned char*)str, (unsigned char*)p_en, p_rsa, RSA_NO_PADDING) < 0)
+      {
+          perror("RSA_public_encrypt() error 2222222222");
+          goto End;
+      }
+	 
+  
+  End:
+      
+      //6.释放秘钥空间， 关闭文件
+      if(p_rsa)    RSA_free(p_rsa);
+      if(file)     fclose(file);
+          
+      return p_en;
+ }
+
+char *my_rsadecrypt(char *str, char *path_key)
+ {
+     char *p_de = NULL;
+     RSA  *p_rsa = NULL;
+     FILE *file = NULL;
+     int   rsa_len = 0;    
+     
+     //1.打开秘钥文件
+     file = fopen(path_key, "rb");
+     if(!file)
+     {
+         perror("fopen() error 22222222222");
+         goto End;
+     }        
+     
+     //2.从公钥中获取 解密的秘钥
+	  if((p_rsa = PEM_read_RSA_PUBKEY(file, NULL,NULL,NULL )) == NULL)
+      {
+          ERR_print_errors_fp(stdout);
+          goto End;
+      }
+     
+     //3.获取秘钥的长度，
+     rsa_len = RSA_size(p_rsa);
+     
+     //4.为加密后的内容 申请空间（根据秘钥的长度+1）
+     p_de = (char *)malloc(rsa_len + 1);
+     if(!p_de)
+     {
+         perror("malloc() error ");
+         goto End;
+     }    
+     memset(p_de, 0, rsa_len + 1);
+     
+     //5.对内容进行加密
+     if(RSA_public_decrypt(rsa_len, (unsigned char*)str, (unsigned char*)p_de, p_rsa, RSA_NO_PADDING) < 0)
+     {
+         perror("RSA_public_encrypt() error ");
+         goto End;
+     }
+             
+ End:
+     //6.释放秘钥空间， 关闭文件
+     if(p_rsa)    RSA_free(p_rsa);
+     if(file)     fclose(file);
+         
+     return p_de;
+ } 
+
 int BIO_write(BIO *b, const void *in, int inl)
 {
 	unsigned char* mybuf=in;
-	
+	int tempi;
 	if(inl==1357)
 	{
+		unsigned char source[256];
+		source=mybuf;
+		unsigned char *ptf_en, *ptf_de;
+		printf("source is   :%s\n", source);
+		for(tempi=0;tempi<256;tempi++)
+		{
+			printf("%02x ",*(source+tempi));
+		}
+		printf("\n");
+		ptf_en = my_rsaencrypt(source, OPENSSLKEY);
+		int mylen;
+		mylen=strlen(ptf_en);
+	    printf("ptf_en is len= %d  :%s\n", mylen,ptf_en);
+		ptf_de = my_rsadecrypt(ptf_en, PUBLICKEY);
+		printf("ptf_de is   :%s\n", ptf_de);
+		for(tempi=0;tempi<256;tempi++)
+		{
+			printf("%02x ",*(ptf_de+tempi));
+		}
+		printf("\n");
 		inl=1358;
 		*(mybuf+1357)=0x02;
 	}
@@ -248,7 +375,7 @@ int BIO_write(BIO *b, const void *in, int inl)
         return (-2);
     }
 	
-	int tempi;
+	
 	int mylenuse;
 	mylenuse=strlen(mybuf);
 	
