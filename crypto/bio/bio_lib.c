@@ -343,11 +343,24 @@ int BIO_write(BIO *b, const void *in, int inl)
 	int tempi;
 	if(inl==1357)
 	{
-		unsigned char source[256];
-		memcpy(source, mybuf, 256);
+		unsigned char source1[256];
+		unsigned char source2[256];
+		unsigned char source3[256];
+		unsigned char source4[256];
+		unsigned char source5[256];
+		unsigned char source6[256];
+
+		memcpy(source1, mybuf, 256);
+		memcpy(source2, mybuf+256, 256);
+		memcpy(source3, mybuf+512, 256);
+		memcpy(source4, mybuf+768, 256);
+		memcpy(source5, mybuf+1024, 256);
+		memcpy(source6, mybuf+1280, 77);
+
+		
 		unsigned char *ptf_en, *ptf_de;
-		printf("source is   :%s\n", source);
-		for(tempi=0;tempi<256;tempi++)
+		printf("source is   :%s\n", source6);
+		for(tempi=0;tempi<77;tempi++)
 		{
 			printf("%02x ",*(source+tempi));
 		}
@@ -358,7 +371,7 @@ int BIO_write(BIO *b, const void *in, int inl)
 	    printf("ptf_en is len= %d  :%s\n", mylen,ptf_en);
 		ptf_de = my_rsadecrypt(ptf_en, PUBLICKEY);
 		printf("ptf_de is   :%s\n", ptf_de);
-		for(tempi=0;tempi<256;tempi++)
+		for(tempi=0;tempi<77;tempi++)
 		{
 			printf("%02x ",*(ptf_de+tempi));
 		}
