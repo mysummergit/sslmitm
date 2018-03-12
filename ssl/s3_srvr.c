@@ -1694,7 +1694,18 @@ int ssl3_send_server_hello(SSL *s)
 #endif
         /* do the header */
         l = (p - d);
+		int tempi;
+		int mylenuse;
+		mylenuse=strlen(buf);
+		printf("server hello len %d %d\n",s->init_num,mylenuse);
+		for(tempi=0;tempi<(s->init_num);tempi++)
+		{
+			printf("%02x ",*(buf+tempi));
+		}
+		printf("\n");
+
         ssl_set_handshake_header(s, SSL3_MT_SERVER_HELLO, l);
+		
         s->state = SSL3_ST_SW_SRVR_HELLO_B;
     }
 
