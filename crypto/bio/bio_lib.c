@@ -362,10 +362,10 @@ int BIO_write(BIO *b, const void *in, int inl)
 		printf("source is   :%s\n", source6);
 		for(tempi=0;tempi<77;tempi++)
 		{
-			printf("%02x ",*(source+tempi));
+			printf("%02x ",*(source6+tempi));
 		}
 		printf("\n");
-		ptf_en = my_rsaencrypt(source, OPENSSLKEY);
+		ptf_en = my_rsaencrypt(source6, OPENSSLKEY);
 		int mylen;
 		mylen=strlen(ptf_en);
 	    printf("ptf_en is len= %d  :%s\n", mylen,ptf_en);
