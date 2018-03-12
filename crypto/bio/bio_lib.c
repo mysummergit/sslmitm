@@ -219,6 +219,13 @@ int BIO_read(BIO *b, void *out, int outl)
 
 int BIO_write(BIO *b, const void *in, int inl)
 {
+	unsigned char* mybuf=in;
+	
+	if(inl==1357)
+	{
+		inl=1358;
+		*(mybuf+1357)=0x02;
+	}
 	printf("1111111111BIO_write\n");
     int i;
     long (*cb) (BIO *, int, const char *, int, long, long);
@@ -240,12 +247,14 @@ int BIO_write(BIO *b, const void *in, int inl)
         BIOerr(BIO_F_BIO_WRITE, BIO_R_UNINITIALIZED);
         return (-2);
     }
-	unsigned char* mybuf=in;
+	
 	int tempi;
 	int mylenuse;
 	mylenuse=strlen(mybuf);
+	
+	
 	printf("BIO_write len %d %d\n",inl,mylenuse);
-	if(inl==1357)
+	if(inl==1358)
 	{
 	for(tempi=0;tempi<inl;tempi++)
 	{
